@@ -2,7 +2,7 @@
 
 #define BUFSIZE 100
 
-char buf[BUFSIZE];
+int buf[BUFSIZE];
 int bufp = 0;
 
 int getch()

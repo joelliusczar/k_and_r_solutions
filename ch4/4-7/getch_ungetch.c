@@ -19,3 +19,12 @@ void ungetch(int c)
 		buf[bufp++] = c;
 	}
 }
+
+void ungets(char s[])
+{
+	int i,c;
+	i = 0;
+	while((c = s[i++]) != '\0'){
+		ungetch(c);
+	}
+}
