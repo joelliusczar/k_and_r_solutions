@@ -1,8 +1,20 @@
+/*expected output*/
+
+/*36*/
+/*36*/
+/*36*/
+/*17*/
+/*18*/
+/*17*/
+/*error: stack empty*/
+/*0*/
+/*error: stack empty*/
+/*0*/
+/*error: insufficient number of elements in stack.*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
-
-#define MAXOP 100
-#define NUMBER '0'
 
 int getop(char []);
 void push(double);
@@ -35,4 +47,61 @@ main(void)
 	printf("%g\n",pop());
 	switchtoptwo();
 	return 0;
+}
+
+#define MAXVAL 100
+
+int sp = 0;
+double val[MAXVAL];
+
+void push(double f)
+{
+	if(sp < MAXVAL){
+		val[sp++] = f;
+	}
+	else{
+		printf("error: stack full, can't push %g\n",f);
+	}
+}
+
+double pop()
+{
+	if(sp > 0){
+		return val[--sp];
+	}
+	else {
+		printf("error: stack empty\n");
+		return 0.0;
+	}
+	
+}
+
+double peek()
+{
+	if(sp > 0){
+		return val[sp-1];
+	}
+	else {
+		printf("error: stack empty\n");
+		return 0.0;
+	}
+}
+
+void switchtoptwo()
+{
+	double temp;
+	if(sp > 1){
+		temp = val[sp -1];
+		val[sp -1] = val[sp -2];
+		val[sp -2] = temp;
+	}
+	else{
+		printf("error: insufficient number of elements in stack. \n");
+	}
+}
+
+
+void clearstack()
+{
+	sp = 0;
 }

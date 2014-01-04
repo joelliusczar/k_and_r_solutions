@@ -1,2 +1,2 @@
-exc4-8: exc4-9.c pop_push.c getop.c getch_ungetch.c
-	 gcc -Wall -g exc4-9.c pop_push.c getop.c getch_ungetch.c -o krexe
+exc4-8: exc4-9.c 
+	 gcc -Wall -g exc4-9.c -o krexe

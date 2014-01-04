@@ -1,51 +1,48 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
 
-#define MAXOP 100
-#define NUMBER '0'
-
-int getop(char []);
-void push(double);
-double pop(void);
+int getch(void);
+void ungetch(int);
+void ungets(char[]);
 
 main(void)
 {
-	int type;
-	double op2;
-	char s[MAXOP];
-	
-	while((type = getop(s))!= EOF){
-		switch(type){
-			case NUMBER:
-				push(atof(s));
-				break;
-			case '+':
-				push(pop() + pop());
-				break;
-			case '*':
-				push(pop() * pop());
-				break;
-			case '-':
-				op2 = pop();
-				push(pop() - op2);
-				break;
-			case '/':
-				op2 = pop();
-				if(op2 != 0.0){
-					push(pop() / op2);
-				}
-				else{
-					printf("error: zero divisor\n");
-				}
-				break;
-			case '\n':
-				printf("\t%.8g\n",pop());
-				break;
-			default:
-				printf("error: unkown command %s\n",s);
-				break;
-		}
-	
+	char c;
+	char ms[] = "Hello this is the test input.\n"; 
+	ungets(ms);
+	while((c = getch()) != '\n'){
+		putchar(c);
 	}
+	putchar('\n');
+	
 	return 0;
+}
+
+
+#define BUFSIZE 100
+
+char buf[BUFSIZE];
+int bufp = 0;
+
+int getch()
+{
+	return (bufp > 0)? buf[--bufp]: getchar();
+}
+
+void ungetch(int c)
+{
+	if(bufp >= BUFSIZE){
+		printf("ungetch: too many characters!\n");
+	}
+	else{
+		buf[bufp++] = c;
+	}
+}
+
+void ungets(char s[])
+{
+	int i = strlen(s);
+	while(i-- > 0){
+		ungetch(s[i]);
+	}
 }
